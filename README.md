@@ -1,5 +1,34 @@
 # Hari-Anna
 
+
+```python
+
+# download wiki image
+
+def getImage(inp):
+    import requests
+    from bs4 import BeautifulSoup
+    from googlesearch import search
+#     inp = input("input data :")
+    url = list(search(f"wiki+{inp}"))[0]
+    req = requests.get(url)
+    soup = BeautifulSoup(req.content,"html.parser")
+    for i in soup.find_all("a",{"class":"mw-file-description"}):
+        for j in i.findAll("img",{"class":"mw-file-element"}):
+            print("https:"+j.get("src"))
+        break
+    import os
+    os.makedirs("logo",exist_ok=True)
+    import urllib
+    urllib.request.urlretrieve("https:"+j.get("src"),f"logo/{inp}.png")
+    import matplotlib.pyplot as plt
+    img = plt.imread(f"logo/{inp}.png")
+    plt.imshow(img);
+    plt.axis("off");
+getImage("paytm")
+
+```
+
 ```python
 """
 
